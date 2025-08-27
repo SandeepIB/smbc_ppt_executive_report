@@ -76,6 +76,31 @@ Example `report_config.json` with all slide 2 placeholders:
 pytest tests/
 ```
 
+## Web Interface
+
+### Quick Start
+**Backend (Terminal 1):**
+```bash
+cd web
+pip install -r backend/requirements.txt
+python start_backend.py
+```
+
+**Frontend (Terminal 2):**
+```bash
+cd web/frontend
+npm install
+npm start
+```
+
+Open http://localhost:3000
+
+### Features
+- Visual slide preview
+- Real-time placeholder editing
+- One-click report generation
+- Modern responsive UI
+
 ## Output
 
 Generates timestamped reports:

@@ -1,0 +1,12 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt web/backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r web/backend/requirements.txt
+
+COPY . .
+
+WORKDIR /app/web
+
+CMD ["python", "start_backend.py"]
