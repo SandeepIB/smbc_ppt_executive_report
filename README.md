@@ -78,7 +78,17 @@ pytest tests/
 
 ## Web Interface
 
-### Quick Start
+### Quick Start (Recommended)
+```bash
+# One command starts everything
+python start_dev.py
+# or
+./start_dev.sh
+# or on Windows
+start_dev.bat
+```
+
+### Manual Start
 **Backend (Terminal 1):**
 ```bash
 cd web
@@ -93,13 +103,14 @@ npm install
 npm start
 ```
 
-Open http://localhost:3000
-
 ### Features
 - Visual slide preview
 - Real-time placeholder editing
 - One-click report generation
 - Modern responsive UI
+- Auto-reload on code changes
+- Port conflict resolution
+- One-command startup
 
 ## Output
 

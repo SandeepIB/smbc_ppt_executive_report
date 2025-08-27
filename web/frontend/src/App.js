@@ -15,8 +15,7 @@ import {
 } from '@mui/material';
 import { Download, Refresh } from '@mui/icons-material';
 import axios from 'axios';
-
-const API_BASE = 'http://localhost:8000';
+import { API_BASE } from './config';
 
 function App() {
   const [config, setConfig] = useState(null);
