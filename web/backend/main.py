@@ -67,21 +67,21 @@ async def generate_report(request: ReplacementRequest):
         if not ppt_path.exists():
             raise HTTPException(status_code=404, detail="PPT template not found")
         
-        # Create temporary output directory
-        with tempfile.TemporaryDirectory() as temp_dir:
-            output_dir = Path(temp_dir)
-            
-            # Generate report
-            editor = PPTEditor(ppt_path)
-            editor.load_presentation()
-            editor.replace_text_in_slide(request.slide_number, request.replacements)
-            output_path = editor.save_report(output_dir)
-            
-            return FileResponse(
-                path=output_path,
-                filename=f"report_{output_path.stem}.pptx",
-                media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            )
+        # Use project output directory instead of temp
+        output_dir = project_root / "output"
+        output_dir.mkdir(exist_ok=True)
+        
+        # Generate report
+        editor = PPTEditor(ppt_path)
+        editor.load_presentation()
+        editor.replace_text_in_slide(request.slide_number, request.replacements)
+        output_path = editor.save_report(output_dir)
+        
+        return FileResponse(
+            path=output_path,
+            filename=f"report_{output_path.stem}.pptx",
+            media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
