@@ -11,14 +11,16 @@ Secure PowerPoint report generator that replaces placeholders in slides based on
 - CLI interface
 - Unit tests
 
-## Installation
+## Installation & Usage
 
+### Option 1: Native Python
+
+**Install:**
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
-
+**Run:**
 ```bash
 python -m src.report_generator.cli \
   --config report_config.json \
@@ -26,17 +28,44 @@ python -m src.report_generator.cli \
   --output-dir output
 ```
 
+### Option 2: Docker
+
+**Build:**
+```bash
+docker build -t ppt-generator .
+```
+
+**Run:**
+```bash
+docker run -v $(pwd):/app ppt-generator \
+  python -m src.report_generator.cli \
+  --config report_config.json \
+  --input input_PPT/SMBC.pptx \
+  --output-dir output
+```
+
 ## Configuration
 
-Example `report_config.json`:
+Example `report_config.json` with all slide 2 placeholders:
 
 ```json
 {
   "slide_number": 2,
   "replacements": {
-    "MPE": "$120 B",
-    "decrease_percent": "3.5%",
-    "date": "August 2025"
+    "MM/DD/YYYY": "08/27/2025",
+    "XXX": "120",
+    "Y%": "3.5%",
+    "YYY": "135",
+    "XX%": "12%",
+    "YY%": "75%",
+    "XXM": "200",
+    "YYK": "450",
+    "XX K": "50",
+    "YYM": "120",
+    "XXK": "20",
+    "XX B": "45",
+    "XXB": "32",
+    "YYB": "50"
   }
 }
 ```
@@ -47,9 +76,9 @@ Example `report_config.json`:
 pytest tests/
 ```
 
-## Docker
+## Output
 
-```bash
-docker build -t ppt-generator .
-docker run -v $(pwd):/app ppt-generator python -m src.report_generator.cli --help
+Generates timestamped reports:
+```
+output/report_generated_YYYYMMDD_HHMMSS.pptx
 ```

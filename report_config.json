@@ -1,13 +1,20 @@
 {
   "slide_number": 2,
   "replacements": {
-    "MPE": "$120 B",
-    "decrease_percent": "3.5%",
-    "date": "August 2025",
-    "MPE_Current": "120",
-    "MPE_DecreasePct": "5",
-    "MPE_RatesDecline": "140",
-    "MPE_USDWeakening": "135"
+    "MM/DD/YYYY": "08/27/2025",
+    "XXX": "120",
+    "Y%": "3.5%",
+    "YYY": "135",
+    "XX%": "12%",
+    "YY%": "75%",
+    "XXM": "200",
+    "YYK": "450",
+    "XX K": "50",
+    "YYM": "120",
+    "XXK": "20",
+    "XX B": "45",
+    "XXB": "32",
+    "YYB": "50"
   }
 }
 
