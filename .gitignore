@@ -34,4 +34,3 @@ venv.bak/
 
 output/
 *.pptx
-!input_PPT/SMBC.pptx
