@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ppt-report-generator"
+version = "1.0.0"
+description = "Secure PPT report generator with JSON configuration"
+requires-python = ">=3.8"
+dependencies = [
+    "python-pptx>=0.6.21",
+    "jsonschema>=4.0.1",
+    "pydantic>=1.10.7",
+    "pytest>=7.0.0"
+]

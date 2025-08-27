@@ -1,28 +1,13 @@
 {
-  "MPE_Current": 120,
-  "MPE_DecreasePct": 5,
-  "MPE_RatesDecline": 140,
-  "MPE_USDWeakening": 135,
-  "LegalEntity": { "Lgl1": 85, "Lgl2": 10, "Lgl3": 5 },
-  "Product": { "Derivatives": 92, "SFTs": 8 },
-  "Counterparties": {
-    "Cpty1": { "MPE_ChangePct": 12, "Trading_Notional": 200 },
-    "Cpty2": { "MPE_ChangePct": 8, "MTM_Change": 150, "DV01": -450, "DV01_MoM": -50, "FXDelta": -120, "FXDelta_MoM": -20 },
-    "Cpty3": { "MPE_ChangePct": -10, "Expired_Notional": 300 }
-  },
-  "Concentration": {
-    "Top20CptyPct": 75,
-    "LargestCptyPct": 12,
-    "Sector1_Concentration": 18,
-    "OtherSectors_MaxConcentration": 10,
-    "Country_US_UK_CA": 60,
-    "NonIG_ExposurePct": 22
-  },
-  "CCP": {
-    "Total": 45,
-    "Top3Pct": 70,
-    "Top3Combined": 32
-  },
-  "FICC": { "MPE": 15, "MTM": 50 }
+  "slide_number": 2,
+  "replacements": {
+    "MPE": "$120 B",
+    "decrease_percent": "3.5%",
+    "date": "August 2025",
+    "MPE_Current": "120",
+    "MPE_DecreasePct": "5",
+    "MPE_RatesDecline": "140",
+    "MPE_USDWeakening": "135"
+  }
 }
 

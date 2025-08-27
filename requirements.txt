@@ -1,0 +1,4 @@
+python-pptx>=0.6.21
+jsonschema>=4.0.1
+pydantic>=1.10.7
+pytest>=7.0.0
