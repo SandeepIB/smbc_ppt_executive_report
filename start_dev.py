@@ -66,6 +66,8 @@ def start_frontend(frontend_port, backend_port):
     env['PORT'] = str(frontend_port)
     env['BROWSER'] = 'none'  # Don't auto-open browser
     
+    print(f"🔗 Setting API_BASE to: http://localhost:{backend_port}")
+    
     return subprocess.Popen([
         "npm", "start"
     ], cwd=Path.cwd() / "web" / "frontend", env=env)
@@ -97,6 +99,7 @@ def main():
     
     print(f"📡 Backend will run on: http://localhost:{backend_port}")
     print(f"🌐 Frontend will run on: http://localhost:{frontend_port}")
+    print(f"🔗 API connection: Frontend -> Backend on port {backend_port}")
     print("=" * 50)
     
     # Check dependencies
