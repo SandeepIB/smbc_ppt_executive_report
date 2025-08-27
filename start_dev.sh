@@ -1,7 +1,7 @@
 #!/bin/bash
 # Full-stack development server launcher
 
-echo "🔧 PPT Report Generator - Development Server"
+echo "🔧 Automated Executive Report Builder - Development Server"
 echo "=============================================="
 
 # Check if Python is available

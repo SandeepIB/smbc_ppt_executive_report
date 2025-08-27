@@ -13,7 +13,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.report_generator.ppt_editor import PPTEditor
 
 
-app = FastAPI(title="PPT Report Generator", version="1.0.0")
+app = FastAPI(title="Automated Executive Report Builder", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,

@@ -92,7 +92,7 @@ function App() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h3" component="h1" gutterBottom align="center" color="primary">
-        PPT Report Generator
+        Automated Executive Report Builder
       </Typography>
       
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}

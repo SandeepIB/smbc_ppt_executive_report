@@ -69,7 +69,7 @@ def start_frontend(frontend_port, backend_port):
 
 def main():
     """Start full-stack development environment."""
-    print("🔧 PPT Report Generator - Development Server")
+    print("🔧 Automated Executive Report Builder - Development Server")
     print("=" * 50)
     
     # Check if Node.js is available

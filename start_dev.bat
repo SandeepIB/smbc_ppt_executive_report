@@ -1,7 +1,7 @@
 @echo off
 REM Full-stack development server launcher for Windows
 
-echo 🔧 PPT Report Generator - Development Server
+echo 🔧 Automated Executive Report Builder - Development Server
 echo ==============================================
 
 REM Check if Python is available
