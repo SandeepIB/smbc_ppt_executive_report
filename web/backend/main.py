@@ -2,8 +2,8 @@
 import json
 import tempfile
 from pathlib import Path
-from typing import Dict, Any
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from typing import Dict
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -11,7 +11,7 @@ from pptx import Presentation
 import sys
 sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.report_generator.ppt_editor import PPTEditor
-from src.report_generator.config import ReportConfig
+
 
 app = FastAPI(title="PPT Report Generator", version="1.0.0")
 
