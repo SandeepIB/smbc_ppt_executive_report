@@ -8,36 +8,33 @@ import os
 import signal
 from pathlib import Path
 
-def find_free_port(start_port=8000):
-    """Find next available port starting from start_port."""
-    port = start_port
-    while port < start_port + 100:
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.bind(('localhost', port))
-                return port
-        except OSError:
-            port += 1
-    raise RuntimeError(f"No free ports found starting from {start_port}")
+def cleanup_port(port):
+    """Kill any process using the specified port."""
+    try:
+        if sys.platform == "win32":
+            result = subprocess.run(f'netstat -ano | findstr :{port}', shell=True, capture_output=True, text=True)
+            if result.stdout:
+                lines = result.stdout.strip().split('\n')
+                for line in lines:
+                    parts = line.split()
+                    if len(parts) > 4:
+                        pid = parts[-1]
+                        subprocess.run(f'taskkill /F /PID {pid}', shell=True, capture_output=True)
+        else:
+            result = subprocess.run(f"lsof -ti:{port}", shell=True, capture_output=True, text=True)
+            if result.stdout.strip():
+                pids = result.stdout.strip().split('\n')
+                for pid in pids:
+                    try:
+                        os.kill(int(pid), signal.SIGTERM)
+                        time.sleep(1)
+                        os.kill(int(pid), signal.SIGKILL)
+                    except:
+                        pass
+    except:
+        pass
 
-def kill_processes_on_ports(ports):
-    """Kill any processes running on specified ports."""
-    for port in ports:
-        try:
-            if sys.platform == "win32":
-                subprocess.run(f"netstat -ano | findstr :{port}", shell=True, capture_output=True)
-            else:
-                result = subprocess.run(f"lsof -ti:{port}", shell=True, capture_output=True, text=True)
-                if result.stdout.strip():
-                    pids = result.stdout.strip().split('\n')
-                    for pid in pids:
-                        try:
-                            os.kill(int(pid), signal.SIGTERM)
-                            print(f"Killed process {pid} on port {port}")
-                        except:
-                            pass
-        except:
-            pass
+
 
 def start_backend(backend_port):
     """Start FastAPI backend with auto-reload."""
@@ -66,8 +63,6 @@ def start_frontend(frontend_port, backend_port):
     env['PORT'] = str(frontend_port)
     env['BROWSER'] = 'none'  # Don't auto-open browser
     
-    print(f"🔗 Setting API_BASE to: http://localhost:{backend_port}")
-    
     return subprocess.Popen([
         "npm", "start"
     ], cwd=Path.cwd() / "web" / "frontend", env=env)
@@ -90,16 +85,18 @@ def main():
         print("❌ npm is required but not found. Please install Node.js from https://nodejs.org/")
         return
     
-    # Find free ports
-    backend_port = find_free_port(8000)
-    frontend_port = find_free_port(3000)
+    # Use fixed ports
+    backend_port = 8000
+    frontend_port = 3000
     
-    # Kill any existing processes on these ports
-    kill_processes_on_ports([backend_port, frontend_port])
+    # Clean up any existing processes on these ports
+    print("🧹 Cleaning up existing processes...")
+    cleanup_port(backend_port)
+    cleanup_port(frontend_port)
+    time.sleep(2)  # Give processes time to die
     
-    print(f"📡 Backend will run on: http://localhost:{backend_port}")
-    print(f"🌐 Frontend will run on: http://localhost:{frontend_port}")
-    print(f"🔗 API connection: Frontend -> Backend on port {backend_port}")
+    print(f"📡 Backend: http://localhost:{backend_port}")
+    print(f"🌐 Frontend: http://localhost:{frontend_port}")
     print("=" * 50)
     
     # Check dependencies
