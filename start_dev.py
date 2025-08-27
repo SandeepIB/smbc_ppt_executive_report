@@ -75,6 +75,19 @@ def main():
     print("🔧 PPT Report Generator - Development Server")
     print("=" * 50)
     
+    # Check if Node.js is available
+    try:
+        subprocess.run(["node", "--version"], capture_output=True, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("❌ Node.js is required but not found. Please install Node.js from https://nodejs.org/")
+        return
+    
+    try:
+        subprocess.run(["npm", "--version"], capture_output=True, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("❌ npm is required but not found. Please install Node.js from https://nodejs.org/")
+        return
+    
     # Find free ports
     backend_port = find_free_port(8000)
     frontend_port = find_free_port(3000)
@@ -88,9 +101,25 @@ def main():
     
     # Check dependencies
     web_dir = Path.cwd() / "web"
-    if not (web_dir / "frontend" / "node_modules").exists():
+    frontend_dir = web_dir / "frontend"
+    
+    # Always check if react-scripts is available
+    try:
+        result = subprocess.run(["npm", "list", "react-scripts"], 
+                              cwd=frontend_dir, capture_output=True, text=True)
+        if result.returncode != 0:
+            raise subprocess.CalledProcessError(result.returncode, "npm list")
+    except (subprocess.CalledProcessError, FileNotFoundError):
         print("📦 Installing frontend dependencies...")
-        subprocess.run(["npm", "install"], cwd=web_dir / "frontend", check=True)
+        try:
+            subprocess.run(["npm", "install"], cwd=frontend_dir, check=True)
+            print("✅ Frontend dependencies installed successfully")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Failed to install frontend dependencies: {e}")
+            return
+        except FileNotFoundError:
+            print("❌ npm not found. Please install Node.js and npm")
+            return
     
     try:
         # Start backend
