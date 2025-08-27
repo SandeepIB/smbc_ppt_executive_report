@@ -17,7 +17,7 @@ app = FastAPI(title="PPT Report Generator", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001", "http://localhost:8000", "http://localhost:8001"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,13 +30,16 @@ class ReplacementRequest(BaseModel):
 @app.get("/api/config")
 async def get_default_config():
     """Get default configuration and slide text."""
-    config_path = Path("../../report_config.json")
+    # Get project root directory
+    project_root = Path(__file__).parent.parent.parent
+    config_path = project_root / "report_config.json"
+    
     try:
         with open(config_path) as f:
             config = json.load(f)
         
         # Get slide text
-        ppt_path = Path("../../input_PPT/SMBC.pptx")
+        ppt_path = project_root / "input_PPT" / "SMBC.pptx"
         if ppt_path.exists():
             pres = Presentation(ppt_path)
             slide = pres.slides[config["slide_number"] - 1]
@@ -58,7 +61,9 @@ async def get_default_config():
 async def generate_report(request: ReplacementRequest):
     """Generate PPT report with replacements."""
     try:
-        ppt_path = Path("../../input_PPT/SMBC.pptx")
+        # Get project root directory
+        project_root = Path(__file__).parent.parent.parent
+        ppt_path = project_root / "input_PPT" / "SMBC.pptx"
         if not ppt_path.exists():
             raise HTTPException(status_code=404, detail="PPT template not found")
         
